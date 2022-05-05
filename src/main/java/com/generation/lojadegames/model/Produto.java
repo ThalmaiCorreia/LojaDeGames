@@ -12,6 +12,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 @Entity
 @Table(name = "tb_produtos")
 public class Produto {
@@ -27,6 +30,7 @@ public class Produto {
 	
 	@NotNull(message = "O atributo nome é obrigatório!")
 	@Size(min = 10, max = 50, message = "O atributo nome deve conter no mínimo 5 caracteres e no máximo 15 caracteres!")
+	@JsonIgnoreProperties
 	private String descricao;
 	
 	@NotBlank(message = "O atributo nome é obrigatório e não pode utilizar espaços em branco!")

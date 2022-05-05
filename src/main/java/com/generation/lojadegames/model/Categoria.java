@@ -8,6 +8,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 @Entity
 @Table(name = "tb_categorias")
 public class Categoria {
@@ -18,6 +21,7 @@ public class Categoria {
 	
 	@NotBlank(message = "O atributo tipo é obrigatorio e não pode utilizar espaços em branco!")
 	@Size(min = 5, max = 10, message ="O atributo tipo deve conter no mínimo 5 caracteres e no máximo 10!")
+	@JsonIgnoreProperties("tipo")
 	private String tipo;
 
 	public Long getId() {
