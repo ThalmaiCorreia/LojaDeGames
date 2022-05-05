@@ -3,15 +3,19 @@ package com.generation.lojadegames.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -29,7 +33,7 @@ public class Produto {
 	private String nome;
 	
 	@NotNull(message = "O atributo nome é obrigatório!")
-	@Size(min = 10, max = 50, message = "O atributo nome deve conter no mínimo 5 caracteres e no máximo 15 caracteres!")
+	@Size(min = 10, max = 500, message = "O atributo nome deve conter no mínimo 5 caracteres e no máximo 500 caracteres!")
 	@JsonIgnoreProperties
 	private String descricao;
 	
@@ -39,11 +43,28 @@ public class Produto {
 	
 	private int quantidade;
 		
+	@Column(name = "data_lancamento")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataLancamento;
 	
+	@NotNull(message = "O atributo preço é obrigatório")
+	@Positive(message = "O atributo preço deve ser maior que zero!")
 	private BigDecimal preco;
 	
 	private String foto;
+
+	@ManyToOne
+	@JsonIgnoreProperties("produto")
+	private Categoria categoria;
+	
+	
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
 
 	public Long getId() {
 		return id;

@@ -1,9 +1,13 @@
 package com.generation.lojadegames.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -20,9 +24,20 @@ public class Categoria {
 	private Long id;
 	
 	@NotBlank(message = "O atributo tipo é obrigatorio e não pode utilizar espaços em branco!")
-	@Size(min = 5, max = 10, message ="O atributo tipo deve conter no mínimo 5 caracteres e no máximo 10!")
-	@JsonIgnoreProperties("tipo")
+	@Size(min = 5, message ="O atributo tipo deve conter no mínimo 5 caracteres")
 	private String tipo;
+	
+	@OneToMany(mappedBy = "categoria", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties("categoria")
+	private List<Produto> produto;
+
+	public List<Produto> getProduto() {
+		return produto;
+	}
+
+	public void setProduto(List<Produto> produto) {
+		this.produto = produto;
+	}
 
 	public Long getId() {
 		return id;
